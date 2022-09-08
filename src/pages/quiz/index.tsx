@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useSelector, shallowEqual } from "react-redux";
 import axios from "axios";
 
 import { StyledContainer } from "../../components/styles/StyledContainer";
 import { StyledSpinner } from "../../components/styles/StyledSpinner";
-import { Grid, Button, Typography, Stack } from "@mui/material";
+import { StyledButton } from "../../components/styles/StyledButton";
+import { Grid, Typography, Stack } from "@mui/material";
 
 import { QuizBox } from "./QuizBox";
 import { Answer } from "../answer";
@@ -16,10 +17,10 @@ type Props = {
 };
 
 export const Quiz: React.FC<Props> = ({ createQuiz }) => {
-  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizIndex, setQuizIndex] = useState<number>(0);
   const [answer, setAnswer] = useState<string[]>([]);
 
-  const getQuiz = () => {
+  const getQuiz = useCallback(() => {
     axios
       .post(API_URL)
       .then((res) => {
@@ -38,7 +39,7 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
       .catch((err) => {
         alert(err.message);
       });
-  };
+  }, [createQuiz]);
 
   const quizzes: readonly IQuiz[] = useSelector(
     (state: QuizState) => state.quizzes,
@@ -47,7 +48,7 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
 
   useEffect(() => {
     if (quizzes.length === 0) getQuiz();
-  }, []);
+  }, [quizzes, getQuiz]);
 
   return quizzes.length ? (
     quizzes.length !== answer.length ? (
@@ -59,7 +60,7 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
             direction="column"
             justifyContent="space-around"
             alignItems="center"
-			minHeight="100vh"
+            minHeight="100vh"
           >
             <Grid item xs>
               <Typography variant="h4" component="h4" align="center">
@@ -75,26 +76,22 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
             </Grid>
             <Grid item xs>
               <Stack spacing={2} direction="row">
-                <Button
-                  variant="contained"
+                <StyledButton
+                  text="Yes"
                   color="success"
                   onClick={() => {
                     setAnswer((prevState: any) => [...prevState, "True"]);
                     setQuizIndex((quizIndex) => quizIndex + 1);
                   }}
-                >
-                  Yes
-                </Button>
-                <Button
-                  variant="contained"
+                ></StyledButton>
+                <StyledButton
+                  text="NO"
                   color="error"
                   onClick={() => {
                     setAnswer((prevState: any) => [...prevState, "False"]);
                     setQuizIndex((quizIndex) => quizIndex + 1);
                   }}
-                >
-                  No
-                </Button>
+                ></StyledButton>
               </Stack>
             </Grid>
           </Grid>
@@ -107,7 +104,7 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
     )
   ) : (
     <>
-		<StyledSpinner />
+      <StyledSpinner />
     </>
   );
 };

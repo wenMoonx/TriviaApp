@@ -1,22 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import { createStore, applyMiddleware, Store } from "redux"
-import { Provider } from "react-redux"
-import thunk from "redux-thunk"
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { createStore, applyMiddleware, Store } from "redux";
+import { Provider } from "react-redux";
+import thunk from "redux-thunk";
+import reportWebVitals from "./reportWebVitals";
 
-import reducer from './store/reducer';
-import { DispatchType, QuizAction, QuizState } from './configs/types';
+import reducer from "./store/reducer";
+import { DispatchType, QuizAction, QuizState } from "./configs/types";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+  document.getElementById("root") as HTMLElement
 );
 
 const store: Store<QuizState, QuizAction> & {
-  dispatch: DispatchType
-} = createStore(reducer, applyMiddleware(thunk))
+  dispatch: DispatchType;
+} = createStore(reducer, applyMiddleware(thunk));
 
 root.render(
   // <React.StrictMode>

@@ -1,7 +1,7 @@
 import React from "react";
 
 import { StyledContainer } from "../../components/styles/StyledContainer";
-import Button from "@mui/material/Button";
+import { StyledButton } from "../../components/styles/StyledButton";
 import { Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 
@@ -33,14 +33,13 @@ export const Home = () => {
             </Typography>
           </Grid>
           <Grid item display="flex" flexDirection="column" alignItems="center">
-            <Button
-              variant="contained"
+            <StyledButton
+              text="Begin"
+              color="primary"
               onClick={() => {
                 navigate("quiz");
               }}
-            >
-              Begin
-            </Button>
+            ></StyledButton>
           </Grid>
         </Grid>
       </StyledContainer>

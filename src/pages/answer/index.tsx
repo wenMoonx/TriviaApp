@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
 import { StyledContainer } from "../../components/styles/StyledContainer";
+import { StyledButton } from "../../components/styles/StyledButton";
 import { StyledItem } from "../../components/styles/StyledItem";
-import { Grid, Typography, Button } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { IQuiz } from "../../configs/types";
 
 type Props = {
@@ -21,7 +22,7 @@ export const Answer: React.FC<Props> = ({ quizzes, answer }) => {
         setScore((prevState) => prevState + 1);
       }
     }
-  }, []);
+  }, [quizzes, answer]);
   return (
     <>
       <StyledContainer>
@@ -48,14 +49,13 @@ export const Answer: React.FC<Props> = ({ quizzes, answer }) => {
             />
           ))}
           <Grid item xs>
-            <Button
-              variant="contained"
+            <StyledButton
+              text="PLAY AGAIN?"
+              color="primary"
               onClick={() => {
                 navigate("/");
               }}
-            >
-              PLAY AGAIN?
-            </Button>
+            ></StyledButton>
           </Grid>
         </Grid>
       </StyledContainer>
