@@ -3,7 +3,11 @@ import React from "react";
 import { Grid, Typography } from "@mui/material";
 import { StyledContainer } from "./StyledContainer";
 
-export const StyledSpinner = () => {
+type Props = {
+  message: string;
+};
+
+export const StyledSpinner: React.FC<Props> = ({ message }) => {
   return (
     <StyledContainer>
       <Grid
@@ -15,7 +19,7 @@ export const StyledSpinner = () => {
         height="100vh"
       >
         <Typography variant="h4" component="h4" align="center">
-          Loading...
+          {message}
         </Typography>
       </Grid>
     </StyledContainer>

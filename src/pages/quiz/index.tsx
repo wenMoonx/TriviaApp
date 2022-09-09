@@ -12,11 +12,12 @@ import { Answer } from "../answer";
 import { API_URL } from "../../configs/constants";
 import { IQuiz, QuizState } from "../../configs/types";
 
-type Props = {
+type IProps = {
   createQuiz: (quiz: IQuiz | any) => void;
+  notAllowStatus: () => void;
 };
 
-export const Quiz: React.FC<Props> = ({ createQuiz }) => {
+export const Quiz: React.FC<IProps> = ({ createQuiz, notAllowStatus }) => {
   const [quizIndex, setQuizIndex] = useState<number>(0);
   const [answer, setAnswer] = useState<string[]>([]);
 
@@ -49,7 +50,6 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
   useEffect(() => {
     if (quizzes.length === 0) getQuiz();
   }, [quizzes, getQuiz]);
-
   return quizzes.length ? (
     quizzes.length !== answer.length ? (
       <>
@@ -99,12 +99,12 @@ export const Quiz: React.FC<Props> = ({ createQuiz }) => {
       </>
     ) : (
       <>
-        <Answer quizzes={quizzes} answer={answer} />
+        <Answer notAllowStatus={notAllowStatus} quizzes={quizzes} answer={answer} />
       </>
     )
   ) : (
     <>
-      <StyledSpinner />
+      <StyledSpinner message="Loading..." />
     </>
   );
 };
