@@ -7,13 +7,18 @@ import { StyledItem } from "../../components/styles/StyledItem";
 import { Grid, Typography } from "@mui/material";
 import { IQuiz } from "../../configs/types";
 
-type Props = {
+type IProps = {
   children?: React.ReactChild[];
   quizzes: readonly IQuiz[];
   answer: string[];
+  notAllowStatus: () => void;
 };
 
-export const Answer: React.FC<Props> = ({ quizzes, answer }) => {
+export const Answer: React.FC<IProps> = ({
+  notAllowStatus,
+  quizzes,
+  answer,
+}) => {
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
   useEffect(() => {
@@ -53,7 +58,10 @@ export const Answer: React.FC<Props> = ({ quizzes, answer }) => {
               text="PLAY AGAIN?"
               color="primary"
               onClick={() => {
-                navigate("/");
+                notAllowStatus();
+                setTimeout(() => {
+                  navigate("/");
+                }, 500)
               }}
             ></StyledButton>
           </Grid>

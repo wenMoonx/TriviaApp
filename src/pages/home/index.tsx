@@ -5,7 +5,11 @@ import { StyledButton } from "../../components/styles/StyledButton";
 import { Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 
-export const Home = () => {
+type IProps = {
+  allowStatus: () => void;
+};
+
+export const Home: React.FC<IProps> = ({ allowStatus }) => {
   const navigate = useNavigate();
   return (
     <>
@@ -37,7 +41,10 @@ export const Home = () => {
               text="Begin"
               color="primary"
               onClick={() => {
-                navigate("quiz");
+                allowStatus();
+                setTimeout(() => {
+                  navigate("/quiz");
+                }, 500)
               }}
             ></StyledButton>
           </Grid>

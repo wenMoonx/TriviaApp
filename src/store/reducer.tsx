@@ -3,6 +3,7 @@ import * as actionTypes from "./actionTypes";
 
 const initialState: QuizState = {
   quizzes: [],
+  status: false,
 };
 const reducer = (
   state: QuizState = initialState,
@@ -17,16 +18,18 @@ const reducer = (
         correct_answer: action.quizzes.correct_answer,
       };
       return {
-        ...state,
+        status: true,
         quizzes: state.quizzes.concat(newQuiz),
       };
-    case actionTypes.CLEAR_QUIZ:
-      const updatedQuiz: IQuiz[] = state.quizzes.filter(
-        (article) => article.id !== action.quizzes.id
-      );
+    case actionTypes.SET_STATUS:
       return {
-        ...state,
-        quizzes: updatedQuiz,
+        status: true,
+        quizzes: state.quizzes,
+      };
+    case actionTypes.CLEAR_STATUS:
+      return {
+        status: false,
+        quizzes: state.quizzes,
       };
   }
   return state;
